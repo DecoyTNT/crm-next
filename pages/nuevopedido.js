@@ -82,7 +82,6 @@ const NuevoPedido = () => {
             }
 
             // Remover de productos lo que no se ocupa
-            // const pedido = productos.map(({ id, existencia, __typename, ...prod }) => prod);
             const pedido = productos.map(({ id, existencia, __typename, ...prod }) => {
 
                 let nuevoProducto = { ...prod, producto: id };
