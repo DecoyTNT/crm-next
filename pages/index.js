@@ -37,6 +37,7 @@ const Home = () => {
 
   // Si no hay información
   if (error) {
+    localStorage.removeItem('token');
     router.push('/login');
     return null;
   }

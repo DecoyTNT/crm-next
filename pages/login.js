@@ -82,6 +82,10 @@ const Login = () => {
         )
     }
 
+    if (localStorage.getItem('token')) {
+        router.push('/');
+    }
+
     return (
         <Layout>
             {mensaje && mostrarMensaje()}
