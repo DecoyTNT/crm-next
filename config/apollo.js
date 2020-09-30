@@ -3,23 +3,24 @@ import fetch from 'node-fetch';
 import { setContext } from 'apollo-link-context';
 
 const httpLink = createHttpLink({
-    uri: 'https://crm-graphql-jm.herokuapp.com/',
+    // uri: 'https://crm-graphql-jm.herokuapp.com/',
+    uri: 'http://localhost:4000/',
     fetch
 });
 
 const authLink = setContext((_, { headers }) => {
 
-    // obtener token del localStorage
+    // Leer el storage almacenado
     const token = localStorage.getItem('token');
+    // console.log(token);
 
     return {
         headers: {
             ...headers,
-            authorization: token
+            authorization: token ? `Bearer ${token}` : ''
         }
     }
 });
-
 const client = new ApolloClient({
     connectToDevTools: true,
     cache: new InMemoryCache(),

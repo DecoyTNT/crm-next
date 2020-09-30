@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from './../components/Layout';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -11,7 +11,6 @@ const AUTENTICAR_USUARIO = gql`
             token
         }
     }
-  
 `;
 
 const Login = () => {
@@ -56,13 +55,13 @@ const Login = () => {
                     // Guardar el token en localStorage
                     const { token } = data.autenticarUsuario;
                     localStorage.setItem('token', token);
-                }, 1000);
-
-                // Redirigir al login
+                }, 2000);
                 setTimeout(() => {
+                    // Redirigir al login
                     setMensaje(null);
                     router.push('/');
                 }, 2000);
+
             } catch (error) {
                 setMensaje(error.message.replace('Error: ', ''));
 
@@ -71,7 +70,6 @@ const Login = () => {
                 }, 3000);
             }
         }
-
     });
 
     const mostrarMensaje = () => {
@@ -80,10 +78,6 @@ const Login = () => {
                 <p>{mensaje}</p>
             </div>
         )
-    }
-
-    if (localStorage.getItem('token')) {
-        router.push('/');
     }
 
     return (

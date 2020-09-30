@@ -8,16 +8,15 @@ const OBTENER_USUARIO = gql`
             id
             nombre
             apellido
-            email
         }
     }
 `;
 
 const Header = () => {
 
-    const { data, loading, error } = useQuery(OBTENER_USUARIO);
-
     const router = useRouter();
+
+    const { client, data, loading, error } = useQuery(OBTENER_USUARIO);
 
     // Esperar a que lleguen los datos
     if (loading) return null;
@@ -25,12 +24,11 @@ const Header = () => {
     if (error) return null;
 
     // Si no hay información
-    if (!data.obtenerUsuario) {
+    if (!data) {
         router.push('/login');
+        client.resetStore();
         return null;
     }
-
-    const { nombre, apellido } = data.obtenerUsuario;
 
     const cerrarSesion = () => {
         localStorage.removeItem('token');
@@ -39,7 +37,9 @@ const Header = () => {
 
     return (
         <div className="sm:flex sm:justify-between mb-6">
-            <p className="mr-2 mb-3 lg:mb-0">Hola {nombre} {apellido}</p>
+            {data.obtenerUsuario && (
+                <p className="mr-2 mb-3 lg:mb-0">Hola {data.obtenerUsuario.nombre} {data.obtenerUsuario.apellido}</p>
+            )}
             <button
                 onClick={cerrarSesion}
                 className="bg-blue-800 w-full sm:w-auto font-bold uppercase text-xs text-white rounded py-1 px-2 shadow-md hover:bg-blue-900"

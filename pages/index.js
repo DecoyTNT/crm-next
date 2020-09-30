@@ -20,6 +20,7 @@ const OBTENER_CLIENTES_USUARIO = gql`
   }
 `;
 
+
 const Home = () => {
 
   const router = useRouter();
@@ -41,6 +42,10 @@ const Home = () => {
     router.push('/login');
     return null;
   }
+
+  // if (!data.obtenerClientesVendedor) {
+  //   return router.push('/login');
+  // }
 
   return (
     <Layout>
